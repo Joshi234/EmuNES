@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NESEmu", "NESEmu\NESEmu.csproj", "{C0FF60B3-5169-42E8-9947-63E85A6410BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0FF60B3-5169-42E8-9947-63E85A6410BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0FF60B3-5169-42E8-9947-63E85A6410BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0FF60B3-5169-42E8-9947-63E85A6410BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0FF60B3-5169-42E8-9947-63E85A6410BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {78DD460E-6B76-4B9C-86C4-3135B140E4EA}
+	EndGlobalSection
+EndGlobal

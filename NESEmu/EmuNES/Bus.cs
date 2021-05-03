@@ -9,19 +9,21 @@ namespace NESEmu.EmuNES
         public CPU cpu;
         PPU ppu;
         APU apu;
+        public byte[] rom;
         public byte[] ram = new byte[2048];
         public byte[] io1 = new byte[8];
         public byte[] io2 = new byte[32];
         public byte[] expensionsRom = new byte[8160];
         public byte[] sram = new byte[8192];
         Mapper mapper = new Mapper0();
+
         public void Init()
         {
-            ram[0] = 0xAD;
-            ram[1] = 0x00;
-            ram[2] = 0x03;
+            ram[0] = 0xA1;
+            ram[1] = 0x01;
+            ram[2] = 0x01;
             ram[3] = 0xFF;
-            mapper.rom = new byte[16384];
+            mapper.rom = rom;
             cpu = new CPU(this);
         }
 
@@ -54,6 +56,7 @@ namespace NESEmu.EmuNES
             }
             else
             {
+                System.Console.WriteLine("Read at: " + adress.ToString() + " Value: " + mapper.Read(adress));
                 return mapper.Read(adress);
             }
         }

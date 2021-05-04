@@ -35,6 +35,46 @@ namespace NESEmu.EmuNES
                 pc++;
                 switch (opcode)
                 {
+                    case 0x21:
+                        cyclesLeft = 6;
+                        AND(bus.Read(IZX()));
+                        break;
+                    case 0x25:
+                        cyclesLeft = 3;
+                        AND(bus.Read(ZeroPage()));
+                        break;
+                    case 0x29:
+                        cyclesLeft = 2;
+                        AND(bus.Read(Immediate()));
+                        break;
+                    case 0x2D:
+                        cyclesLeft = 4;
+                        AND(bus.Read(Absolute()));
+                        break;
+                    case 0x31:
+                        cyclesLeft = 5;
+                        AND(bus.Read(IZY()));
+                        break;
+                    case 0x35:
+                        cyclesLeft = 4;
+                        AND(bus.Read(ZeroPageX()));
+                        break;
+                    case 0x39:
+                        cyclesLeft = 4;
+                        AND(bus.Read(AbsoluteY()));
+                        break;
+                    case 0x3D:
+                        cyclesLeft = 4;
+                        AND(bus.Read(AbsoluteX()));
+                        break;
+                    case 0x4C:
+                        cyclesLeft = 3;
+                        JMP(Absolute());
+                        break;
+                    case 0x6C:
+                        cyclesLeft = 5;
+                        JMP(Indirect());
+                        break;
                     case 0x81:
                         cyclesLeft = 6;
                         STA(IZX());
@@ -226,6 +266,15 @@ namespace NESEmu.EmuNES
             return (ushort)(BitConverter.ToUInt16(new byte[] { pch, pcl }) + y);
         }
 
+        ushort Indirect()
+        {
+            ushort adress = (BitConverter.ToUInt16(new byte[] { bus.Read((ushort)(pc + 1)), bus.Read(pc) }));
+            byte pcl = bus.Read(adress);
+            byte pch = bus.Read((ushort)(adress + 1));
+
+            return (ushort)(BitConverter.ToUInt16(new byte[] { pch, pcl }));
+        }
+
         ushort IZX()
         {
             ushort t = bus.Read(pc);
@@ -262,6 +311,13 @@ namespace NESEmu.EmuNES
         #endregion
 
         #region Instructions 
+
+        void AND(byte value)
+        {
+            a = (byte)(a & value);
+            p.Z = (a == 0);
+        }
+
         /// <summary>
         /// Load to A(Accumalator)
         /// </summary>
@@ -327,6 +383,11 @@ namespace NESEmu.EmuNES
         void STA(ushort value)
         {
             bus.Write(value, a);
+        }
+
+        void JMP(ushort value)
+        {
+            pc = value;
         }
         #endregion
     }

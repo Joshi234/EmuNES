@@ -13,9 +13,9 @@ namespace NESEmu.EmuNES
         public void Init()
         {
             bus = new Bus();
-            LoadRom(@"C:\Users\JS\Downloads\instr_test-v5\rom_singles\07-abs_xy.nes");
+            LoadRom(@"C:\Users\Joshua\source\repos\NESEmu\NESEmu\rom_singles\nestest.nes");
             bus.Init();
-            bus.cpu.pc = 0x8000;
+            //bus.cpu.pc = 0x8000;
         }
 
         public void StartConsole()

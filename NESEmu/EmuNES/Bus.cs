@@ -19,10 +19,10 @@ namespace NESEmu.EmuNES
 
         public void Init()
         {
-            ram[0] = 0xA0;
-            ram[1] = 0x03;
-            ram[2] = 0x01;
-            ram[3] = 0xFF;
+            ram[0] = 0x6C;
+            ram[1] = 0x00;
+            ram[2] = 0x03;
+            ram[4] = 0xFF;
             mapper.rom = rom;
             cpu = new CPU(this);
         }
@@ -34,8 +34,9 @@ namespace NESEmu.EmuNES
 
         public byte Read(ushort adress)
         {
-            if(adress <= 0x1FFF){
-                //System.Console.WriteLine("Read at: " + adress.ToString() + " Value: " + ram[adress % 0x0800]) ;
+            System.Console.WriteLine("Read at: " + adress.ToString());
+            if (adress <= 0x1FFF){
+                System.Console.WriteLine("Read at: " + adress.ToString() + " Value: " + ram[adress % 0x0800]) ;
                 return ram[adress%0x0800];
             }
             else if(adress <= 0x3FFF)
@@ -56,7 +57,7 @@ namespace NESEmu.EmuNES
             }
             else
             {
-                //System.Console.WriteLine("Read at: " + adress.ToString() + " Value: " + mapper.Read(adress));
+                System.Console.WriteLine("Read at: " + adress.ToString() + " Value: " + mapper.Read(adress));
                 return mapper.Read(adress);
             }
         }

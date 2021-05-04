@@ -48,6 +48,8 @@ namespace NESEmu
         {
             console.bus.Clock();
             aText.Text = "A:" + console.bus.cpu.a.ToString();
+            xText.Text = "X:" + console.bus.cpu.x.ToString();
+            yText.Text = "Y:" + console.bus.cpu.y.ToString();
         }
     }
 }

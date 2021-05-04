@@ -9,17 +9,26 @@ namespace NESEmu.EmuNES
     {
         public Bus bus;
         public bool paused = false;
+        int cyclecount = 0;
         public void Init()
         {
             bus = new Bus();
-            //LoadRom(@"C:\Users\Joshua\source\repos\NESEmu\NESEmu\rom_singles\08-ind_y.nes");
+            LoadRom(@"C:\Users\JS\Downloads\instr_test-v5\rom_singles\07-abs_xy.nes");
             bus.Init();
+            bus.cpu.pc = 0x8000;
         }
 
         public void StartConsole()
         {
-            while (paused == false) { 
+
+            while (paused == false) {
+                cyclecount++;
+                //bus.cpu.pc = 0;
                 bus.Clock();
+                if (cyclecount % 100000 == 0)
+                {
+                    System.Console.WriteLine("Cycles: " + cyclecount.ToString());
+                }
             }
         }
 

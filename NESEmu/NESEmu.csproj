@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="EmuNES\Types\" />
+    <Compile Remove="EmuNES\Types\**" />
+    <EmbeddedResource Remove="EmuNES\Types\**" />
+    <None Remove="EmuNES\Types\**" />
   </ItemGroup>
 
 </Project>

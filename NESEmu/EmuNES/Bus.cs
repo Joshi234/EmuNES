@@ -9,7 +9,7 @@ namespace NESEmu.EmuNES
         public CPU cpu;
         PPU ppu;
         APU apu;
-        public byte[] rom;
+        public byte[] rom = new byte[32000];
         public byte[] ram = new byte[2048];
         public byte[] io1 = new byte[8];
         public byte[] io2 = new byte[32];
@@ -19,8 +19,8 @@ namespace NESEmu.EmuNES
 
         public void Init()
         {
-            ram[0] = 0xA1;
-            ram[1] = 0x01;
+            ram[0] = 0xA0;
+            ram[1] = 0x03;
             ram[2] = 0x01;
             ram[3] = 0xFF;
             mapper.rom = rom;
@@ -35,7 +35,7 @@ namespace NESEmu.EmuNES
         public byte Read(ushort adress)
         {
             if(adress <= 0x1FFF){
-                System.Console.WriteLine("Read at: " + adress.ToString() + " Value: " + ram[adress % 0x0800]) ;
+                //System.Console.WriteLine("Read at: " + adress.ToString() + " Value: " + ram[adress % 0x0800]) ;
                 return ram[adress%0x0800];
             }
             else if(adress <= 0x3FFF)
@@ -56,20 +56,29 @@ namespace NESEmu.EmuNES
             }
             else
             {
-                System.Console.WriteLine("Read at: " + adress.ToString() + " Value: " + mapper.Read(adress));
+                //System.Console.WriteLine("Read at: " + adress.ToString() + " Value: " + mapper.Read(adress));
                 return mapper.Read(adress);
             }
         }
 
-        public void Write(ulong adress, byte value)
+        public void Write(ushort adress, byte value)
         {
+            System.Console.WriteLine("Wrote at: " + adress.ToString() + " Value: " +value.ToString());
             if (adress <= 0x1FFF)
             {
                 ram[adress % 0x0800] = value;
             }
+            else if (adress <= 0x3FFF)
+            {
+                 io1[(adress - 0x2000) % 0x8] = value ;
+            }
+            else if (adress <= 0x401F)
+            {
+                 io2[adress - 0x4000]=value;
+            }
             else if (adress <= 0x5FFF)
             {
-                throw new AccessViolationException();
+                expensionsRom[adress - 0x4020] = value;
             }
             else if (adress <= 0x7FFF)
             {

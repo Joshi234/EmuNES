@@ -33,6 +33,8 @@ namespace NESEmu
             this.aText = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.xText = new System.Windows.Forms.Label();
+            this.yText = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -74,11 +76,31 @@ namespace NESEmu
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // xText
+            // 
+            this.xText.AutoSize = true;
+            this.xText.Location = new System.Drawing.Point(130, 122);
+            this.xText.Name = "xText";
+            this.xText.Size = new System.Drawing.Size(17, 15);
+            this.xText.TabIndex = 1;
+            this.xText.Text = "X:";
+            // 
+            // yText
+            // 
+            this.yText.AutoSize = true;
+            this.yText.Location = new System.Drawing.Point(182, 122);
+            this.yText.Name = "yText";
+            this.yText.Size = new System.Drawing.Size(17, 15);
+            this.yText.TabIndex = 1;
+            this.yText.Text = "Y:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.yText);
+            this.Controls.Add(this.xText);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.aText);
@@ -97,6 +119,8 @@ namespace NESEmu
         private System.Windows.Forms.Label aText;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label xText;
+        private System.Windows.Forms.Label yText;
     }
 }
 

@@ -8,7 +8,7 @@ namespace NESEmu.EmuNES.Mappers
     {
         public override byte Read(ulong adress)
         {
-            if(adress > 0x8000 && adress < 0xBFFF)
+            if(adress >= 0x8000 && adress <= 0xFFFF)
             {
                 return rom[adress - 0x8000];
             }

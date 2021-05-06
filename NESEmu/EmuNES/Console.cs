@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Linq;
+using System.Collections;
+
 namespace NESEmu.EmuNES
 {
     public class Console
@@ -13,7 +15,8 @@ namespace NESEmu.EmuNES
         public void Init()
         {
             bus = new Bus();
-            LoadRom(@"C:\Users\Joshua\source\repos\NESEmu\NESEmu\rom_singles\nestest.nes");
+            LoadRom(@"C:\Users\Joshua\source\repos\NESEmu\NESEmu\rom_singles\nes-test-roms-master\blargg_nes_cpu_test5\official.nes");
+            //LoadRom(@"G:\roms\nes\Mega Man (E) [!].nes");
             bus.Init();
             //bus.cpu.pc = 0x8000;
         }
@@ -38,6 +41,9 @@ namespace NESEmu.EmuNES
             int prgRomSize = 16384 * rom[4];
             int chrRomSize = 8192 * rom[5];
 
+
+  
+            System.Console.WriteLine("Mapper: " + (rom[6] & 0b00001111).ToString());
             bus.rom = rom.Skip(16).Take(prgRomSize).ToArray();
             
         }

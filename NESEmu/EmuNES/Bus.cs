@@ -19,12 +19,10 @@ namespace NESEmu.EmuNES
 
         public void Init()
         {
-            ram[0] = 0x6C;
-            ram[1] = 0x00;
-            ram[2] = 0x03;
-            ram[4] = 0xFF;
             mapper.rom = rom;
+            
             cpu = new CPU(this);
+            cpu.pc = 0x8000;
         }
 
         public void Clock()

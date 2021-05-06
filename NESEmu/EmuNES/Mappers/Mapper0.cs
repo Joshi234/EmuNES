@@ -10,7 +10,7 @@ namespace NESEmu.EmuNES.Mappers
         {
             if(adress >= 0x8000 && adress <= 0xFFFF)
             {
-                return rom[adress - 0x8000];
+                return rom[(adress - 0x8000)% 16384];
             }
             else
             {

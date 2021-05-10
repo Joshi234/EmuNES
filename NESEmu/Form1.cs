@@ -17,6 +17,8 @@ namespace NESEmu
     public partial class Form1 : Form
     {
         public Console console = new Console();
+        BufferedGraphicsContext context;
+        BufferedGraphics myBuffer;
         Thread consoleThread;
         public Form1()
         {
@@ -25,6 +27,11 @@ namespace NESEmu
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            context = BufferedGraphicsManager.Current;
+            // Creates a BufferedGraphics instance associated with Form1, and with
+            // dimensions the same size as the drawing surface of Form1.
+            myBuffer = context.Allocate(this.CreateGraphics(),
+               this.DisplayRectangle);
             AllocConsole();
         }
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -37,6 +44,7 @@ namespace NESEmu
             console.Init();
             consoleThread = new Thread(console.StartConsole);
             consoleThread.Start();
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -46,6 +54,8 @@ namespace NESEmu
 
         private void button3_Click(object sender, EventArgs e)
         {
+            myBuffer.Graphics.DrawImage(new Bitmap(500, 500), new Point(0, 0));
+            myBuffer.Render();
             console.bus.Clock();
             aText.Text = "A:" + console.bus.cpu.a.ToString();
             xText.Text = "X:" + console.bus.cpu.x.ToString();

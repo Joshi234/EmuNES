@@ -659,6 +659,7 @@ namespace NESEmu.EmuNES
 
         ushort Immediate()
         {
+            pc++;
             return pc;
         }
 
@@ -689,7 +690,7 @@ namespace NESEmu.EmuNES
             byte pcl = bus.Read(pc);
             pc++;
             byte pch = bus.Read(pc);
-            return BitConverter.ToUInt16(new byte[] { pch, pcl });
+            return BitConverter.ToUInt16(new byte[] { pcl, pch });
         }
 
         ushort AbsoluteX()
@@ -705,19 +706,15 @@ namespace NESEmu.EmuNES
                 cyclesLeft++;
             }
 
-            return (ushort)(BitConverter.ToUInt16(new byte[] { pch, pcl }) + x);
+            return (ushort)(BitConverter.ToUInt16(new byte[] { pcl, pch }) + x);
         }
 
-        ushort Relative()
+        byte Relative()
         {
             pc++;
-            ushort addr = bus.Read(pc);
+            byte addr = bus.Read(pc);
             pc++;
 
-            if((addr & 0x80)==1)
-            {
-                addr |= 0xFF00;
-            }
             return addr;
         }
 
@@ -734,7 +731,7 @@ namespace NESEmu.EmuNES
                 cyclesLeft++;
             }
 
-            return (ushort)(BitConverter.ToUInt16(new byte[] { pch, pcl }) + y);
+            return (ushort)(BitConverter.ToUInt16(new byte[] { pcl, pch }) + y);
         }
 
         ushort Indirect()
@@ -744,7 +741,7 @@ namespace NESEmu.EmuNES
             byte pcl = bus.Read(adress);
             byte pch = bus.Read((ushort)(adress + 1));
 
-            return (ushort)(BitConverter.ToUInt16(new byte[] { pch, pcl }));
+            return (ushort)(BitConverter.ToUInt16(new byte[] { pcl, pch }));
         }
 
         ushort IZX()
@@ -758,7 +755,7 @@ namespace NESEmu.EmuNES
             int pageIndex = pc / 256;
 
             byte pch = bus.Read((ushort)((t + x + 1) & 0x00FF));
-            ushort adress = BitConverter.ToUInt16(new byte[] { pch, pcl });
+            ushort adress = BitConverter.ToUInt16(new byte[] { pcl, pch });
 
             return (ushort)(adress + y);
         }
@@ -773,7 +770,7 @@ namespace NESEmu.EmuNES
 
 
             byte pch = bus.Read((ushort)((t + 1) & 0x00FF));
-            ushort adress = BitConverter.ToUInt16(new byte[] { pch, pcl });
+            ushort adress = BitConverter.ToUInt16(new byte[] { pcl, pch });
             if (adress / 256 != (adress + y) / 256)
             {
                 cyclesLeft++;
@@ -1029,7 +1026,7 @@ namespace NESEmu.EmuNES
             byte pcl = bus.Read(0xFFFE);
             byte pch = bus.Read(0xFFFF);
 
-            pc = BitConverter.ToUInt16(new byte[] { pch, pcl });
+            pc = BitConverter.ToUInt16(new byte[] { pcl, pch });
         }
 
         void BVC(sbyte value)
@@ -1273,7 +1270,7 @@ namespace NESEmu.EmuNES
 
         void LSR()
         {
-            byte[] temp = new byte[0];
+            byte[] temp = new byte[1];
             temp[0] = a;
             BitArray bitArray = new BitArray(temp[0]);
             bitArray.Length = 8;

@@ -7,7 +7,7 @@ namespace NESEmu.EmuNES
     public class Bus
     {
         public CPU cpu;
-        PPU ppu;
+        public PPU ppu;
         APU apu;
         public byte[] rom = new byte[32000];
         public byte[] ram = new byte[2048];
@@ -17,17 +17,19 @@ namespace NESEmu.EmuNES
         public byte[] sram = new byte[8192];
         Mapper mapper = new Mapper0();
 
-        public void Init()
+        public void Init(FastBitmapLib.FastBitmap frameBuffer)
         {
             mapper.rom = rom;
             
             cpu = new CPU(this);
+            ppu = new PPU(this,frameBuffer);
             cpu.pc = 0x8000;
         }
 
         public void Clock()
         {
             cpu.clock();
+            ppu.LoadSprites();
         }
 
         public byte Read(ushort adress)

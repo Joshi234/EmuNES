@@ -12,4 +12,8 @@
     <None Remove="EmuNES\Types\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FastBitmapLib" Version="2.0.0" />
+  </ItemGroup>
+
 </Project>

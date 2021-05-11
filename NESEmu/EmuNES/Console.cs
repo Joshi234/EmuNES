@@ -12,12 +12,13 @@ namespace NESEmu.EmuNES
         public Bus bus;
         public bool paused = false;
         int cyclecount = 0;
-        public void Init()
+        public void Init(FastBitmapLib.FastBitmap frameBuffer)
         {
             bus = new Bus();
-            LoadRom(@"C:\Users\Joshua\source\repos\NESEmu\NESEmu\rom_singles\nes-test-roms-master\blargg_nes_cpu_test5\official.nes");
+            bus.Init(frameBuffer);
+            LoadRom(@"C:\Users\JS\Downloads\mariobros.nes");
             //LoadRom(@"G:\roms\nes\Mega Man (E) [!].nes");
-            bus.Init();
+            
             //bus.cpu.pc = 0x8000;
         }
 
@@ -45,7 +46,7 @@ namespace NESEmu.EmuNES
   
             System.Console.WriteLine("Mapper: " + (rom[6] & 0b00001111).ToString());
             bus.rom = rom.Skip(16).Take(prgRomSize).ToArray();
-            
+            bus.ppu.chr = rom.Skip(16+prgRomSize).Take(chrRomSize).ToArray();
         }
     }
 }

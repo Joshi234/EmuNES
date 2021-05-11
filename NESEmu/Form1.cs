@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using NESEmu.EmuNES;
 using Console = NESEmu.EmuNES.Console;
 using System.Threading;
+using FastBitmapLib;
 
 namespace NESEmu
 {
@@ -20,6 +21,8 @@ namespace NESEmu
         BufferedGraphicsContext context;
         BufferedGraphics myBuffer;
         Thread consoleThread;
+        Bitmap bitmap = new Bitmap(512, 512);
+        FastBitmap frameBuffer ;
         public Form1()
         {
             InitializeComponent();
@@ -28,6 +31,7 @@ namespace NESEmu
         private void Form1_Load(object sender, EventArgs e)
         {
             context = BufferedGraphicsManager.Current;
+            frameBuffer = new FastBitmap(bitmap);
             // Creates a BufferedGraphics instance associated with Form1, and with
             // dimensions the same size as the drawing surface of Form1.
             myBuffer = context.Allocate(this.CreateGraphics(),
@@ -41,7 +45,7 @@ namespace NESEmu
         private void button1_Click(object sender, EventArgs e)
         {
             
-            console.Init();
+            console.Init(frameBuffer);
             consoleThread = new Thread(console.StartConsole);
             consoleThread.Start();
 
@@ -49,12 +53,13 @@ namespace NESEmu
 
         private void button2_Click(object sender, EventArgs e)
         {
-            console.Init();
+
+            console.Init(frameBuffer);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            myBuffer.Graphics.DrawImage(new Bitmap(500, 500), new Point(0, 0));
+            myBuffer.Graphics.DrawImage(bitmap, 0,0,2048,2048);
             myBuffer.Render();
             console.bus.Clock();
             aText.Text = "A:" + console.bus.cpu.a.ToString();

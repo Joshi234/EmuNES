@@ -335,7 +335,7 @@ namespace NESEmu.EmuNES
                         break;
                     case 0x86:
                         cyclesLeft = 3;
-                        STX(ZeroPageY());
+                        STX(ZeroPage());
                         break;
                     case 0x88:
                         cyclesLeft = 2;
@@ -641,7 +641,7 @@ namespace NESEmu.EmuNES
                         break;
                     default:
 
-                        //throw new Exception("OPCODE " + opcode + " NOT IMPLEMENTED");
+                        throw new Exception("OPCODE " + opcode + " NOT IMPLEMENTED");
                         break;
                 }
                 pc++;
@@ -700,7 +700,6 @@ namespace NESEmu.EmuNES
             int pageIndex = pc / 256;
             pc++;
             byte pch = bus.Read(pc);
-            pc++;
             if (pc / 256 != pageIndex)
             {
                 cyclesLeft++;
@@ -713,7 +712,6 @@ namespace NESEmu.EmuNES
         {
             pc++;
             byte addr = bus.Read(pc);
-            pc++;
 
             return addr;
         }
@@ -725,7 +723,6 @@ namespace NESEmu.EmuNES
             int pageIndex = pc / 256;
             pc++;
             byte pch = bus.Read(pc);
-            pc++;
             if (pc / 256 != pageIndex)
             {
                 cyclesLeft++;

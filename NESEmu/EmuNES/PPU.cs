@@ -12,7 +12,7 @@ namespace NESEmu.EmuNES
         FastBitmap frameBuffer;
         Bus bus;
         public byte[] chr;
-        public PPU(Bus _bus,FastBitmap buffer)
+        public PPU(Bus _bus,ref FastBitmap buffer)
         {
             bus = _bus;
             frameBuffer = buffer;
@@ -26,14 +26,15 @@ namespace NESEmu.EmuNES
                 for (int ie = 0; ie < 8; ie++)
                 {
                     
-                    BitArray bitArray = new BitArray(chr[(i * 16)+ie]);
-                    bitArray.Length = 8;
-                    foreach(bool bit in bitArray)
+                    BitArray bitArray = new BitArray(new byte[] { chr[(i * 16) + ie] });
+                    for(int ir = 0; ir< bitArray.Count; ir++)
                     {
-                        if (i * 16 < frameBuffer.Width) { 
-                        
-                        if (bit) {
-                                frameBuffer.SetPixel(i * 16, ie, Color.Red);
+                        bool bit = bitArray[ir];
+                        if (i * 16 < frameBuffer.Width) {
+                            
+                            if (bit) {
+                                System.Console.WriteLine("i: " + (i * 16).ToString() + " ie: " + ie.ToString());
+                                frameBuffer.SetPixel((i * 16)+ir, ie, Color.Red);
                             }
                         }   
                     }

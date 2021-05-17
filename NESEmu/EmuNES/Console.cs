@@ -12,10 +12,10 @@ namespace NESEmu.EmuNES
         public Bus bus;
         public bool paused = false;
         int cyclecount = 0;
-        public void Init(FastBitmapLib.FastBitmap frameBuffer)
+        public void Init(ref FastBitmapLib.FastBitmap frameBuffer)
         {
             bus = new Bus();
-            bus.Init(frameBuffer);
+            bus.Init(ref frameBuffer);
             LoadRom(@"C:\Users\JS\Downloads\mariobros.nes");
             //LoadRom(@"G:\roms\nes\Mega Man (E) [!].nes");
             

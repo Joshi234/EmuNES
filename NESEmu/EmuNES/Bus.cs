@@ -17,12 +17,12 @@ namespace NESEmu.EmuNES
         public byte[] sram = new byte[8192];
         Mapper mapper = new Mapper0();
 
-        public void Init(FastBitmapLib.FastBitmap frameBuffer)
+        public void Init(ref FastBitmapLib.FastBitmap frameBuffer)
         {
             mapper.rom = rom;
             
             cpu = new CPU(this);
-            ppu = new PPU(this,frameBuffer);
+            ppu = new PPU(this,ref frameBuffer);
             cpu.pc = 0x8000;
         }
 

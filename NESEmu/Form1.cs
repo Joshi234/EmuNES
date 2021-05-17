@@ -45,7 +45,7 @@ namespace NESEmu
         private void button1_Click(object sender, EventArgs e)
         {
             
-            console.Init(frameBuffer);
+            console.Init(ref frameBuffer);
             consoleThread = new Thread(console.StartConsole);
             consoleThread.Start();
 
@@ -54,14 +54,17 @@ namespace NESEmu
         private void button2_Click(object sender, EventArgs e)
         {
 
-            console.Init(frameBuffer);
+            console.Init(ref frameBuffer);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            console.bus.Clock();
+            frameBuffer.Lock();
+            //frameBuffer.SetPixel(0, 0, Color.Red);
+            frameBuffer.Unlock();
             myBuffer.Graphics.DrawImage(bitmap, 0,0,2048,2048);
             myBuffer.Render();
-            console.bus.Clock();
             aText.Text = "A:" + console.bus.cpu.a.ToString();
             xText.Text = "X:" + console.bus.cpu.x.ToString();
             yText.Text = "Y:" + console.bus.cpu.y.ToString();

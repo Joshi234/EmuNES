@@ -17,13 +17,15 @@ namespace NESEmu.EmuNES
         public byte[] sram = new byte[8192];
         Mapper mapper = new Mapper0();
 
-        public void Init(ref FastBitmapLib.FastBitmap frameBuffer)
+        public void Init(ref FastBitmapLib.FastBitmap frameBuffer, byte[] chrrom)
         {
             mapper.rom = rom;
             
             cpu = new CPU(this);
             ppu = new PPU(this,ref frameBuffer);
+            ppu.chr = chrrom;
             cpu.pc = 0x8000;
+            io1[2] = 0x40;
         }
 
         public void Clock()
@@ -69,6 +71,7 @@ namespace NESEmu.EmuNES
             {
                 ram[adress % 0x0800] = value;
             }
+            
             else if (adress <= 0x3FFF)
             {
                  io1[(adress - 0x2000) % 0x8] = value ;

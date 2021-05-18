@@ -761,7 +761,6 @@ namespace NESEmu.EmuNES
         {
             pc++;
             ushort t = bus.Read(pc);
-            pc++;
 
             byte pcl = bus.Read((ushort)(t & 0x00FF));
 
@@ -828,8 +827,7 @@ namespace NESEmu.EmuNES
         //Uses Accumalator
         void ASL()
         {
-            BitArray bitArray = new BitArray(a);
-            bitArray.Length = 8;
+            BitArray bitArray = new BitArray(new byte[] { a });
             p.C = bitArray[7];
 
             for (int i = 0; i < 7; i++)
@@ -852,8 +850,7 @@ namespace NESEmu.EmuNES
 
             temp[0] = bus.Read(adress);
 
-            BitArray bitArray = new BitArray(temp[0]);
-            bitArray.Length = 8;
+            BitArray bitArray = new BitArray(new byte[] { temp[0] });
             p.C = bitArray[7];
 
             for(int i = 0;i < 7; i++)
@@ -925,8 +922,7 @@ namespace NESEmu.EmuNES
             byte value = bus.Read(adress);
 
             byte temp = (byte)(a & value);
-            BitArray tempBitArray = new BitArray(temp);
-            tempBitArray.Length = 8;
+            BitArray tempBitArray = new BitArray(new byte[] { temp });
             p.Z = (temp == 0);
             p.N = tempBitArray[7];
             p.V = tempBitArray[6];
@@ -992,7 +988,7 @@ namespace NESEmu.EmuNES
             a = value;
 
             p.Z = (a==0);
-            BitArray array = new BitArray(a);
+            BitArray array = new BitArray(new byte[] { a });
             array.Length = 8;
             if(array.Count > 7)
             {
@@ -1086,8 +1082,7 @@ namespace NESEmu.EmuNES
             value = (byte)(a - value);
             p.Z = a == value;
 
-            BitArray temp = new BitArray(value);
-            temp.Length = 8;
+            BitArray temp = new BitArray(new byte[] { value });
             p.N = temp[7];
         }
 
@@ -1097,8 +1092,7 @@ namespace NESEmu.EmuNES
             value = (byte)(x - value);
             p.Z = x == value;
 
-            BitArray temp = new BitArray(value);
-            temp.Length = 8;
+            BitArray temp = new BitArray(new byte[] { value });
             p.N = temp[7];
         }
 
@@ -1108,7 +1102,7 @@ namespace NESEmu.EmuNES
             value = (byte)(y - value);
             p.Z = y == value;
 
-            BitArray temp = new BitArray(value);
+            BitArray temp = new BitArray(new byte[] { value });
             temp.Length = 8;
             p.N = temp[7];
         }
@@ -1118,8 +1112,7 @@ namespace NESEmu.EmuNES
             byte result = (byte)(bus.Read(adress) - 1);
             p.Z = (result == 0);
 
-            BitArray temp = new BitArray(result);
-            temp.Length = 8;
+            BitArray temp = new BitArray(new byte[] { result });
             p.N = temp[7];
 
             bus.Write(adress, result);
@@ -1131,8 +1124,7 @@ namespace NESEmu.EmuNES
 
             p.Z = (x == 0);
 
-            BitArray temp = new BitArray(x);
-            temp.Length = 8;
+            BitArray temp = new BitArray(new byte[] { x });
             p.N = temp[7];
         }
 
@@ -1142,8 +1134,7 @@ namespace NESEmu.EmuNES
 
             p.Z = (y == 0);
 
-            BitArray temp = new BitArray(y);
-            temp.Length = 8;
+            BitArray temp = new BitArray(new byte[] { y });
             p.N = temp[7];
         }
 
@@ -1153,8 +1144,7 @@ namespace NESEmu.EmuNES
 
             p.Z = a == 0;
 
-            BitArray temp = new BitArray(a);
-            temp.Length = 8;
+            BitArray temp = new BitArray(new byte[] { a });
             p.N = temp[7];
         }
 
@@ -1164,8 +1154,7 @@ namespace NESEmu.EmuNES
             temp++;
             p.Z = (temp == 0);
 
-            BitArray tempBitArray = new BitArray(temp);
-            tempBitArray.Length = 8;
+            BitArray tempBitArray = new BitArray(new byte[] { temp });
             p.N = tempBitArray[7];
 
             bus.Write(adress, temp);
@@ -1176,8 +1165,7 @@ namespace NESEmu.EmuNES
             x++;
             p.Z = (x == 0);
 
-            BitArray tempBitArray = new BitArray(x);
-            tempBitArray.Length = 8;
+            BitArray tempBitArray = new BitArray(new byte[] { x });
             p.N = tempBitArray[7];
         }
 
@@ -1186,8 +1174,7 @@ namespace NESEmu.EmuNES
             y++;
             p.Z = (y == 0);
 
-            BitArray tempBitArray = new BitArray(y);
-            tempBitArray.Length = 8;
+            BitArray tempBitArray = new BitArray(new byte[] { y });
             p.N = tempBitArray[7];
         }
 
@@ -1219,8 +1206,7 @@ namespace NESEmu.EmuNES
             x = value;
 
             p.Z = (x == 0);
-            BitArray array = new BitArray(a);
-            array.Length = 8;
+            BitArray array = new BitArray(new byte[] { a });
             if (array.Count > 7)
             {
                 p.N = array[7];
@@ -1236,8 +1222,7 @@ namespace NESEmu.EmuNES
             y = value;
 
             p.Z = (y == 0);
-            BitArray array = new BitArray(a);
-            array.Length = 8;
+            BitArray array = new BitArray(new byte[] { a });
             if (array.Count > 7)
             {
                 p.N = array[7];
@@ -1252,13 +1237,11 @@ namespace NESEmu.EmuNES
         {
             byte[] temp = new byte[0];
             temp[0] = bus.Read(adress);
-            BitArray bitArray = new BitArray(temp[0]);
-            bitArray.Length = 8;
+            BitArray bitArray = new BitArray(new byte[] { temp[0] });
             p.C = bitArray[0];
 
             temp[0] = (byte)(temp[0] >> 1);
-            bitArray = new BitArray(temp[0]);
-            bitArray.Length = 8;
+            bitArray = new BitArray(new byte[] { temp[0] });
             p.N = bitArray[7];
             p.Z = (temp[0] == 0);
 
@@ -1269,13 +1252,11 @@ namespace NESEmu.EmuNES
         {
             byte[] temp = new byte[1];
             temp[0] = a;
-            BitArray bitArray = new BitArray(temp[0]);
-            bitArray.Length = 8;
+            BitArray bitArray = new BitArray(new byte[] { temp[0] });
             p.C = bitArray[0];
 
             temp[0] = (byte)(temp[0] >> 1);
-            bitArray = new BitArray(temp[0]);
-            bitArray.Length = 8;
+            bitArray = new BitArray(new byte[] { temp[0] });
             p.N = bitArray[7];
             p.Z = (temp[0] == 0);
             a = temp[0];
@@ -1287,8 +1268,7 @@ namespace NESEmu.EmuNES
 
             p.Z = a == 0;
 
-            BitArray bitArray = new BitArray(a);
-            bitArray.Length = 8;
+            BitArray bitArray = new BitArray(new byte[] { a });
             p.N = bitArray[7];
         }
 
@@ -1310,8 +1290,7 @@ namespace NESEmu.EmuNES
             a = bus.Read(s);
 
             p.Z = a == 0;
-            BitArray bitArray = new BitArray(a);
-            bitArray.Length = 8;
+            BitArray bitArray = new BitArray(new byte[] { a });
             p.N = bitArray[7];
         }
 
@@ -1324,14 +1303,12 @@ namespace NESEmu.EmuNES
         void ROL(ushort adress)
         {
             byte value = bus.Read(adress);
-            BitArray bitArray = new BitArray(value);
-            bitArray.Length = 8;
+            BitArray bitArray = new BitArray(new byte[] { value });
             bool tempC = p.C;
 
             value = (byte)(value << 1);
             p.C = bitArray[7];
-            bitArray = new BitArray(value);
-            bitArray.Length = 8;
+            bitArray = new BitArray(new byte[] { value });
 
             bitArray[0] = tempC;
             p.N = bitArray[7];
@@ -1339,14 +1316,12 @@ namespace NESEmu.EmuNES
 
         void ROL()
         {
-            BitArray bitArray = new BitArray(a);
-            bitArray.Length = 8;
+            BitArray bitArray = new BitArray(new byte[] { a });
             bool tempC = p.C;
 
             a = (byte)(a << 1);
             p.C = bitArray[7];
-            bitArray = new BitArray(a);
-            bitArray.Length = 8;
+            bitArray = new BitArray(new byte[] { a });
 
             bitArray[0] = tempC;
             p.N = bitArray[7];
@@ -1354,14 +1329,12 @@ namespace NESEmu.EmuNES
 
         void ROR()
         {
-            BitArray bitArray = new BitArray(a);
-            bitArray.Length = 8;
+            BitArray bitArray = new BitArray(new byte[] { a });
             bool tempC = p.C;
 
             a = (byte)(a >> 1);
             p.C = bitArray[0];
-            bitArray = new BitArray(a);
-            bitArray.Length = 8;
+            bitArray = new BitArray(new byte[] { a });
 
             bitArray[7] = tempC;
             p.N = bitArray[0];
@@ -1370,14 +1343,12 @@ namespace NESEmu.EmuNES
         void ROR(ushort adress)
         {
             byte value = bus.Read(adress);
-            BitArray bitArray = new BitArray(value);
-            bitArray.Length = 8;
+            BitArray bitArray = new BitArray(new byte[] { value });
             bool tempC = p.C;
 
             value = (byte)(value >> 1);
             p.C = bitArray[0];
-            bitArray = new BitArray(value);
-            bitArray.Length = 8;
+            bitArray = new BitArray(new byte[] { value });
 
             bitArray[7] = tempC;
             p.N = bitArray[0];
@@ -1449,8 +1420,7 @@ namespace NESEmu.EmuNES
         {
             x = a;
             p.Z = (x == 0);
-            BitArray bitArray = new BitArray(x);
-            bitArray.Length = 8;
+            BitArray bitArray = new BitArray(new byte[] { x });
             p.N = bitArray[7];
         }
 
@@ -1458,8 +1428,7 @@ namespace NESEmu.EmuNES
         {
             y = a;
             p.Z = (y == 0);
-            BitArray bitArray = new BitArray(y);
-            bitArray.Length = 8;
+            BitArray bitArray = new BitArray(new byte[] { y });
             p.N = bitArray[7];
         }
 
@@ -1467,8 +1436,7 @@ namespace NESEmu.EmuNES
         {
             x = s;
             p.Z = (x == 0);
-            BitArray bitArray = new BitArray(x);
-            bitArray.Length = 8;
+            BitArray bitArray = new BitArray(new byte[] { x });
             p.N = bitArray[7];
         }
 
@@ -1476,8 +1444,7 @@ namespace NESEmu.EmuNES
         {
             a = x;
             p.Z = (a == 0);
-            BitArray bitArray = new BitArray(a);
-            bitArray.Length = 8;
+            BitArray bitArray = new BitArray(new byte[] { a });
             p.N = bitArray[7];
         }
 
@@ -1485,8 +1452,7 @@ namespace NESEmu.EmuNES
         {
             s = x;
             p.Z = (s == 0);
-            BitArray bitArray = new BitArray(s);
-            bitArray.Length = 8;
+            BitArray bitArray = new BitArray(new byte[] { s });
             p.N = bitArray[7];
         }
 
@@ -1494,8 +1460,7 @@ namespace NESEmu.EmuNES
         {
             a = y;
             p.Z = (a == 0);
-            BitArray bitArray = new BitArray(a);
-            bitArray.Length = 8;
+            BitArray bitArray = new BitArray(new byte[] { a });
             p.N = bitArray[7];
         }
         #endregion
@@ -1521,7 +1486,7 @@ namespace NESEmu.EmuNES
         void ConvertByteToFlags(byte value)
         {
 
-            BitArray bitArray = new BitArray(value);
+            BitArray bitArray = new BitArray(new byte[] { value });
             bitArray.Length = 8;
             p.C = bitArray[0];
             p.Z = bitArray[1];

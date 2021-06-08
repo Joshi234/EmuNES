@@ -712,7 +712,6 @@ namespace NESEmu.EmuNES
         {
             pc++;
             byte addr = bus.Read(pc);
-
             return addr;
         }
 

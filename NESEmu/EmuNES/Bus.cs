@@ -31,7 +31,7 @@ namespace NESEmu.EmuNES
         public void Clock()
         {
             cpu.clock();
-            ppu.LoadSprites();
+            //ppu.LoadSprites();
         }
 
         public byte Read(ushort adress)
